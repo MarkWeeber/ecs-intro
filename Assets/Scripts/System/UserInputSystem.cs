@@ -5,13 +5,15 @@ using UnityEngine.InputSystem;
 
 public class UserInputSystem : ComponentSystem
 {
-    private EntityQuery _movementQuery;
+    private EntityQuery _userInputQuerry;
     private InputAction _moveAction;
+    private InputAction _dashAction;
     private float2 _moveInput;
+    private float _dashInput;
 
     protected override void OnCreate()
     {
-        _movementQuery = GetEntityQuery(ComponentType.ReadOnly<UserInputData>());
+        _userInputQuerry = GetEntityQuery(ComponentType.ReadOnly<InputData>());
     }
 
     protected override void OnStartRunning()
@@ -21,11 +23,16 @@ public class UserInputSystem : ComponentSystem
             .With(name: "Up", binding: "<Keyboard>/w")
             .With(name: "Down", binding: "<Keyboard>/s")
             .With(name: "Left", binding: "<Keyboard>/a")
-            .With(name: "Down", binding: "<Keyboard>/d");
+            .With(name: "Right", binding: "<Keyboard>/d");
         _moveAction.performed += MoveActionPerformed;
         _moveAction.started += MoveActionPerformed;
         _moveAction.canceled += MoveActionPerformed;
         _moveAction.Enable();
+
+        _dashAction = new InputAction(name: "dash", binding: "<Keyboard>/Space");
+        _dashAction.performed += context => { _dashInput = context.ReadValue<float>(); };
+        _dashAction.canceled += context => { _dashInput = context.ReadValue<float>(); };
+        _dashAction.Enable();
     }
 
     private void MoveActionPerformed(InputAction.CallbackContext obj)
@@ -36,21 +43,23 @@ public class UserInputSystem : ComponentSystem
     protected override void OnStopRunning()
     {
         _moveAction.Disable();
+        _dashAction.Disable();
     }
 
     protected override void OnUpdate()
     {
-        Entities.With(_movementQuery).ForEach(
-                (UserInputData userInputData) =>
+        Entities.With(_userInputQuerry).ForEach(
+                (ref InputData inputData) =>
                 {
-                    MapUserInput(userInputData);
+                    MapUserInput(ref inputData);
                 }
             );
     }
 
-    private void MapUserInput(UserInputData userInputData)
+    private void MapUserInput(ref InputData inputData)
     {
-        userInputData.Move = _moveInput;
+        inputData.Move = _moveInput;
+        inputData.Dash = _dashInput;
     }
 
 }
