@@ -35,14 +35,13 @@ public class CharacterMoveSystem : ComponentSystem
     {
         _direction = new float3(inputData.Move.x, 0, inputData.Move.y);
         _directionMagnitude = (math.length(_direction));
-        if ((_directionMagnitude < inputData.DeadZoneMagnitude) || (inputData.DashDurationTimer > 0))
+        if ((_directionMagnitude < inputData.DeadZoneMagnitude) || (inputData.BusyByAbilityTimer > 0))
         {
             return;
         }
         _currentPosition = transform.position;
         _speedMultiplier = deltaTime * moveData.Speed;
         _currentPosition += _direction* _speedMultiplier;
-        transform.position = _currentPosition;
-        transform.rotation = Quaternion.LookRotation(_direction);
+        transform.SetPositionAndRotation(_currentPosition, Quaternion.LookRotation(_direction));
     }
 }

@@ -8,8 +8,10 @@ public class UserInputSystem : ComponentSystem
     private EntityQuery _userInputQuerry;
     private InputAction _moveAction;
     private InputAction _dashAction;
+    private InputAction _fireAction;
     private float2 _moveInput;
     private float _dashInput;
+    private float _fireInput;
 
     protected override void OnCreate()
     {
@@ -29,10 +31,15 @@ public class UserInputSystem : ComponentSystem
         _moveAction.canceled += MoveActionPerformed;
         _moveAction.Enable();
 
-        _dashAction = new InputAction(name: "dash", binding: "<Keyboard>/Space");
+        _dashAction = new InputAction(name: "dash", binding: "<Keyboard>/Leftshift");
         _dashAction.performed += context => { _dashInput = context.ReadValue<float>(); };
         _dashAction.canceled += context => { _dashInput = context.ReadValue<float>(); };
         _dashAction.Enable();
+
+        _fireAction = new InputAction(name: "fire", binding: "<Keyboard>/Space");
+        _fireAction.performed += context => { _fireInput = context.ReadValue<float>(); };
+        _fireAction.canceled += context => { _fireInput = context.ReadValue<float>(); };
+        _fireAction.Enable();
     }
 
     private void MoveActionPerformed(InputAction.CallbackContext obj)
@@ -44,6 +51,7 @@ public class UserInputSystem : ComponentSystem
     {
         _moveAction.Disable();
         _dashAction.Disable();
+        _fireAction.Disable();
     }
 
     protected override void OnUpdate()
@@ -60,6 +68,7 @@ public class UserInputSystem : ComponentSystem
     {
         inputData.Move = _moveInput;
         inputData.Dash = _dashInput;
+        inputData.Fire = _fireInput;
     }
 
 }

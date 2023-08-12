@@ -23,9 +23,9 @@ public class AnimatorParametersSetSystem : ComponentSystem
 
     private void ManageAnimatorParameters(UserInputData userInputData, ref InputData inputData)
     {
-        if (userInputData.animator != null)
+        if (userInputData.Animator != null)
         {
-            userInputData.animator.SetFloat("MoveSpeed", math.length(inputData.Move));
+            userInputData.Animator.SetFloat("MoveSpeed", math.length(inputData.Move));
         }
     }
 }
