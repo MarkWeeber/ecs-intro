@@ -1,23 +1,30 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class FireAbility : MonoBehaviour, IAbility
 {
     [SerializeField]
     private float fireCoolDown = 0.52f;
     [SerializeField]
     private Transform projectilePrefab;
+    [SerializeField]
+    private int maxProjectileAmount = 20;
+    private List<Projectile> projectiles;
+    private Animator animator;
 
     public float Duration { get { return fireCoolDown; } set { fireCoolDown = value; } }
 
-    private Transform _sampleProjectile;
     private UserInputData userInputData;
+    private Projectile _sampleProjectile;
+    private IEnumerator<Projectile> _em;
 
     private void Awake()
     {
-        userInputData = GetComponent<UserInputData>();
+        projectiles = new List<Projectile>();
+        StashProjectiles();
+        _em = projectiles.GetEnumerator();
+        animator = GetComponentInParent<Animator>();
+        userInputData = GetComponentInParent<UserInputData>();
         if (userInputData != null)
         {
             userInputData.Abilities.Add(this);
@@ -26,7 +33,26 @@ public class FireAbility : MonoBehaviour, IAbility
 
     public void Execute()
     {
-        _sampleProjectile = GameObject.Instantiate(projectilePrefab);
-        _sampleProjectile.transform.SetPositionAndRotation(transform.position, Quaternion.LookRotation(transform.forward));
+        if (_em.MoveNext())
+        {
+            _sampleProjectile = _em.Current;
+        }
+        else
+        {
+            _em.Reset();
+            _em.MoveNext();
+            _sampleProjectile = _em.Current;
+        }
+        _sampleProjectile.Enable(transform);
+        animator.SetTrigger(name: "Fire");
+    }
+
+    private void StashProjectiles()
+    {
+        for (int i = 0; i < maxProjectileAmount; i++)
+        {
+            _sampleProjectile = GameObject.Instantiate(projectilePrefab, transform.position, Quaternion.identity).GetComponent<Projectile>();
+            projectiles.Add(_sampleProjectile);
+        }
     }
 }

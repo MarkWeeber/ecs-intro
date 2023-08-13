@@ -7,39 +7,33 @@ public class ProjectileSystem : ComponentSystem
     private EntityQuery _projectilesQuerry;
     private float3 _newPosition;
     private float _deltaTime;
-    private float _currentTime;
 
     protected override void OnCreate()
     {
         _projectilesQuerry = GetEntityQuery(
-            ComponentType.ReadOnly<ProjectileData>(),
-            ComponentType.ReadOnly<Transform>());
+            ComponentType.ReadOnly<Projectile>(),
+            ComponentType.ReadOnly<Transform>(),
+            ComponentType.ReadOnly<ProjectileData>());
     }
 
     protected override void OnUpdate()
     {
         _deltaTime = Time.DeltaTime;
-        _currentTime = UnityEngine.Time.time;
         Entities.With(_projectilesQuerry).ForEach
             (
-                (Transform transform, ref ProjectileData projectileData) =>
+                (ref ProjectileData projectileData, Transform transform, Projectile projectile) =>
                 {
-                    ManageProjectileTravel(transform, ref projectileData, _deltaTime, _currentTime);
+                    ManageProjectileTravel(transform, projectile, ref projectileData, _deltaTime);
                 }
             );
     }
 
-    private void ManageProjectileTravel(Transform transform, ref ProjectileData projectileData, float deltaTime, float currentTime)
+    private void ManageProjectileTravel(Transform transform, Projectile projectile, ref ProjectileData projectileData, float deltaTime)
     {
-        //if (projectileData.CreatedTime + projectileData.LifeTime > currentTime)
-        //{
-        //    GameObject.Destroy(transform.gameObject);
-        //}
-        //else
+        if (projectile.Active)
         {
             _newPosition = transform.forward * projectileData.Speed * deltaTime;
-            transform.position = _newPosition;
+            transform.position += new Vector3(_newPosition.x, _newPosition.y, _newPosition.z);
         }
-        
     }
 }

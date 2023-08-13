@@ -12,8 +12,6 @@ public class UserInputData : MonoBehaviour, IConvertGameObjectToEntity
     private float movementSpeed = 1f;
     [SerializeField]
     private float deadZoneMagnitude = 0.1f;
-    //[SerializeField]
-    //private float dashDuration = 1f;
 
     private void Awake()
     {
@@ -24,10 +22,6 @@ public class UserInputData : MonoBehaviour, IConvertGameObjectToEntity
     {
         dstManager.AddComponentData<InputData>(entity, new InputData {DeadZoneMagnitude = deadZoneMagnitude, BusyByAbilityTimer = 0});
         dstManager.AddComponentData<MoveData>(entity, new MoveData {Speed = movementSpeed});
-        //if (DashAction != null && DashAction is IAbility)
-        //{
-        //    dstManager.AddComponentData<DashData>(entity, new DashData { DashDuration = dashDuration });
-        //}
         if (Abilities.Count > 0)
         {
             foreach (MonoBehaviour item in Abilities)
