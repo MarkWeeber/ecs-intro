@@ -955,6 +955,8 @@ GameObject:
   - component: {fileID: 8352560466654023495}
   - component: {fileID: 786044633}
   - component: {fileID: 786044634}
+  - component: {fileID: 8266900552796476918}
+  - component: {fileID: 9203161518255143209}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -1043,6 +1045,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashSpeed: 3
   dashCoolDown: 0.7
+--- !u!136 &8266900552796476918
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268345107810667752}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &9203161518255143209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268345107810667752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b42fa1673ad80d4da61de272713ce3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8268358952469748214
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,3 +1503,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireCoolDown: 0.52
   projectilePrefab: {fileID: 7009383776329016042, guid: 8a2b449c38c0d6e49a6609c504537407, type: 3}
+  maxProjectileAmount: 5
