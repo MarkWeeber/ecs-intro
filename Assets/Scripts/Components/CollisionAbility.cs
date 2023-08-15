@@ -1,24 +1,27 @@
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using EcsIntro;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Collider))]
-public class CollisionAbility : MonoBehaviour, IAbility, IConvertGameObjectToEntity
+public class CollisionAbility : MonoBehaviour, IConvertGameObjectToEntity, ICollisionAbility
 {
+    [TagSelector]
+    public string[] TargetTags = new string[] { };
     public float Duration { get { return 0; } set {; } }
-    private Collider _collider;
+    public List<Collider> Collisions { get; set; }
+    public Collider Collider { get; set; } 
 
     private void Awake()
     {
-        _collider = GetComponent<Collider>();
+        Collider = GetComponent<Collider>();
     }
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         float3 position = gameObject.transform.position;
-        switch (_collider)
+        switch (Collider)
         {
             case SphereCollider sphere:
                 sphere.ToWorldSpaceSphere(out var spherCenter, out var sphereRadius);
@@ -57,11 +60,12 @@ public class CollisionAbility : MonoBehaviour, IAbility, IConvertGameObjectToEnt
                 break;
             default: break;
         }
+        Collider.enabled = false;
     }
 
     public void Execute()
     {
-
+        Debug.Log(gameObject.name + ": HIT");
     }
 }
 
