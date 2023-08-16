@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class CollisionSystem : ComponentSystem
 {
-    private EntityQuery _collisionQuerry;
+    private EntityQuery _collisionQuery;
     private Collider[] _results = new Collider[50];
 
     protected override void OnCreate()
     {
-        _collisionQuerry = GetEntityQuery(
+        _collisionQuery = GetEntityQuery(
             ComponentType.ReadOnly<ActorColliderData>(),
             ComponentType.ReadOnly<Transform>()
             );
@@ -18,21 +18,19 @@ public class CollisionSystem : ComponentSystem
 
     protected override void OnUpdate()
     {
-        var dstManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        Entities.With(_collisionQuerry).ForEach(
+        Entities.With(_collisionQuery).ForEach(
                 (Entity entity, Transform transform, ref ActorColliderData colliderData) =>
                 {
                     var gameObject = transform.gameObject;
+                    ICollisionAbility collisionAbility = gameObject.GetComponent<ICollisionAbility>();
                     float3 position = gameObject.transform.position;
                     Quaternion rotation = gameObject.transform.rotation;
-
-                    ICollisionAbility collisionAbility = gameObject.GetComponent<ICollisionAbility>();
 
                     if (collisionAbility == null)
                     {
                         return;
                     }
-                    
+
                     collisionAbility.Collisions?.Clear();
 
                     int size = 0;

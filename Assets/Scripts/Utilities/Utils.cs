@@ -5,7 +5,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
-namespace EcsIntro
+namespace EcsCollisionUtility
 {
     public static class Utils
     {
@@ -80,6 +80,11 @@ namespace EcsIntro
         private static float Max(float3 v)
         {
             return Mathf.Max(v.x, Mathf.Max(v.y, v.z));
+        }
+
+        public static float Magnitude(this float3 f)
+        {
+            return math.length(f);
         }
     }
 }

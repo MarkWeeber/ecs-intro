@@ -1,17 +1,21 @@
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-using EcsIntro;
+using EcsCollisionUtility;
 using System.Collections.Generic;
+using TagsUtility;
 
 [RequireComponent(typeof(Collider))]
-public class CollisionAbility : MonoBehaviour, IConvertGameObjectToEntity, ICollisionAbility
+public abstract class CollisionAbility : MonoBehaviour, IConvertGameObjectToEntity, ICollisionAbility, IDestructible
 {
     [TagSelector]
-    public string[] TargetTags = new string[] { };
+    public string[] targetTags = new string[] { };
     public float Duration { get { return 0; } set {; } }
+    public string[] TargetTags { get { return targetTags; } set { targetTags = value; } }
     public List<Collider> Collisions { get; set; }
-    public Collider Collider { get; set; } 
+    public Collider Collider { get; set; }
+    public bool Active { get { return _active; } set { _active = value; } }
+    private bool _active = true;
 
     private void Awake()
     {

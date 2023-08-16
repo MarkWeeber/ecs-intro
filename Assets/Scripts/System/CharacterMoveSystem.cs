@@ -34,7 +34,7 @@ public class CharacterMoveSystem : ComponentSystem
     private void ManageMovement(Transform transform, ref InputData inputData, ref MoveData moveData, float deltaTime)
     {
         _direction = new float3(inputData.Move.x, 0, inputData.Move.y);
-        _directionMagnitude = (math.length(_direction));
+        _directionMagnitude = math.length(_direction);
         if ((_directionMagnitude < inputData.DeadZoneMagnitude) || (inputData.BusyByAbilityTimer > 0))
         {
             return;
