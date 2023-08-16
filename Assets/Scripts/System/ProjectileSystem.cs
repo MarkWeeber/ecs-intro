@@ -16,7 +16,7 @@ public class ProjectileSystem : ComponentSystem
         _rigidObjectsQuery = GetEntityQuery(
             ComponentType.ReadOnly<Projectile>(),
             ComponentType.ReadOnly<Transform>(),
-            ComponentType.ReadOnly<RigidObjectData>());
+            ComponentType.ReadOnly<ProjectileObjectData>());
     }
 
     protected override void OnUpdate()
@@ -24,14 +24,14 @@ public class ProjectileSystem : ComponentSystem
         _deltaTime = Time.DeltaTime;
         Entities.With(_rigidObjectsQuery).ForEach
             (
-                (ref RigidObjectData rigidObjectData, Transform transform, Projectile projectile) =>
+                (ref ProjectileObjectData rigidObjectData, Transform transform, Projectile projectile) =>
                 {
                     ManageProjectileTravel(transform, projectile, ref rigidObjectData, _deltaTime);
                 }
             );
     }
 
-    private void ManageProjectileTravel(Transform transform, Projectile projectile, ref RigidObjectData rigidObjectData, float deltaTime)
+    private void ManageProjectileTravel(Transform transform, Projectile projectile, ref ProjectileObjectData rigidObjectData, float deltaTime)
     {
         if (projectile.ActiveProjectile)
         {

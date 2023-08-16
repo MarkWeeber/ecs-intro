@@ -19,8 +19,8 @@ public class Projectile : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        dstManager.AddComponentData<RigidObjectData>(entity,
-            new RigidObjectData { Velocity = float3.zero, ForwardInitialDirectionSelf = new float3(0, 0, 1f), ForwardDirectionSelf = new float3(0, 0, 1f) });
+        dstManager.AddComponentData<ProjectileObjectData>(entity,
+            new ProjectileObjectData { Velocity = float3.zero, ForwardInitialDirectionSelf = new float3(0, 0, 1f), ForwardDirectionSelf = new float3(0, 0, 1f) });
     }
 
     public void Enable(Transform pos)
@@ -40,7 +40,7 @@ public class Projectile : MonoBehaviour, IConvertGameObjectToEntity
     }
 }
 
-public struct RigidObjectData : IComponentData
+public struct ProjectileObjectData : IComponentData
 {
     public float3 Velocity;
     public float3 ForwardInitialDirectionSelf;

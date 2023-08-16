@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class BounceAbility : CollisionAbility, ICollisionAbility
 {
-    public LayerMask targetMask;
-    public float3 ContactNormal;
-    public bool Contacted;
+    public LayerMask TargetMask;
+    public ActorColliderData ActorColliderData;
 
     private void Awake()
     {
         Collider = GetComponent<Collider>();
-        Contacted = false;
     }
 
     public void Execute()
@@ -19,9 +17,28 @@ public class BounceAbility : CollisionAbility, ICollisionAbility
 
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnDrawGizmos()
     {
-        ContactNormal = other.contacts[0].normal;
-        Contacted = true;
+        Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
+        switch (ActorColliderData.ColliderType)
+        {
+            case ColliderType.Sphere:
+                Gizmos.DrawSphere((float3)transform.position + ActorColliderData.SphereCenter, ActorColliderData.SphereRadius);
+                break;
+            case ColliderType.Capsule:
+                var point1 = ActorColliderData.CapsuleStart + (float3)transform.position;
+                var point2 = ActorColliderData.CapsuleEnd + (float3)transform.position;
+                var center = (point1 + point2) / 2f;
+                point1 = (float3)(transform.rotation * (point1 - center)) + center;
+                point2 = (float3)(transform.rotation * (point2 - center)) + center;
+                Gizmos.DrawSphere(point1, ActorColliderData.CapsuleRadius);
+                Gizmos.DrawSphere(point2, ActorColliderData.CapsuleRadius);
+                break;
+            case ColliderType.Box:
+                Gizmos.DrawCube((float3)transform.position + ActorColliderData.BoxCenter, ActorColliderData.BoxHalfExtents * 2f);
+                break;
+            default:
+                break;
+        }
     }
 }
