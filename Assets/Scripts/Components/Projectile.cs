@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour, IConvertGameObjectToEntity
         meshRenderer.enabled = true;
         _collider.enabled = true;
         transform.parent = null;
-        //transform.SetPositionAndRotation(pos.position, Quaternion.LookRotation(pos.forward));
+        transform.SetPositionAndRotation(pos.position, Quaternion.LookRotation(pos.forward));
     }
 
     public void Disable()
