@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.Entities;
 using UnityEngine;
 
 public class FireAbility : MonoBehaviour, IAbility
@@ -8,11 +9,13 @@ public class FireAbility : MonoBehaviour, IAbility
     [SerializeField]
     private Transform projectilePrefab;
     [SerializeField]
-    private int maxProjectileAmount = 20;
-    private List<Projectile> projectiles;
+    private Transform firePort;
     private Animator animator;
 
     public float Duration { get { return fireCoolDown; } set { fireCoolDown = value; } }
+
+    private AbilityType abilityType = AbilityType.CharacterAbility;
+    public AbilityType AbilityType { get { return abilityType; } set { abilityType = value; } }
 
     private UserInputData userInputData;
     private Projectile _sampleProjectile;
@@ -20,9 +23,6 @@ public class FireAbility : MonoBehaviour, IAbility
 
     private void Awake()
     {
-        projectiles = new List<Projectile>();
-        StashProjectiles();
-        _em = projectiles.GetEnumerator();
         animator = GetComponentInParent<Animator>();
         userInputData = GetComponentInParent<UserInputData>();
         if (userInputData != null)
@@ -33,26 +33,18 @@ public class FireAbility : MonoBehaviour, IAbility
 
     public void Execute()
     {
-        if (_em.MoveNext())
-        {
-            _sampleProjectile = _em.Current;
-        }
-        else
-        {
-            _em.Reset();
-            _em.MoveNext();
-            _sampleProjectile = _em.Current;
-        }
-        _sampleProjectile.Enable(transform);
-        animator.SetTrigger(name: "Fire");
+        SendProjectie();
     }
 
-    private void StashProjectiles()
+    private void SendProjectie()
     {
-        for (int i = 0; i < maxProjectileAmount; i++)
+        var _go = GameObject.Instantiate(projectilePrefab, firePort.position, firePort.rotation);
+        _sampleProjectile = _go.GetComponent<Projectile>();
+        if (_sampleProjectile != null)
         {
-            _sampleProjectile = GameObject.Instantiate(projectilePrefab, transform.position, Quaternion.identity).GetComponent<Projectile>();
-            projectiles.Add(_sampleProjectile);
+            _sampleProjectile.Enable(firePort);
         }
+        animator.SetTrigger(name: "Fire");
+        _sampleProjectile = null;
     }
 }

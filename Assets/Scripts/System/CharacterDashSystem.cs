@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CharacterDashSystem : ComponentSystem
 {
-    private EntityQuery _dashQuerry;
+    private EntityQuery _dashQuery;
     private float _deltaTime;
     private DashAbility _dashAbility;
 
     protected override void OnCreate()
     {
-        _dashQuerry = GetEntityQuery(
+        _dashQuery = GetEntityQuery(
             ComponentType.ReadOnly<InputData>(),
             ComponentType.ReadOnly<DashData>(),
             ComponentType.ReadOnly<UserInputData>());
@@ -19,7 +19,7 @@ public class CharacterDashSystem : ComponentSystem
     protected override void OnUpdate()
     {
         _deltaTime = Time.DeltaTime;
-        Entities.With(_dashQuerry).ForEach
+        Entities.With(_dashQuery).ForEach
             (
                 (UserInputData userInputData, ref DashData dashData, ref InputData inputData) =>
                 {

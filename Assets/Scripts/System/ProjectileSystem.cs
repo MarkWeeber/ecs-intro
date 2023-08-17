@@ -1,39 +1,48 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
+using EcsCollisionUtility;
 
 public class ProjectileSystem : ComponentSystem
 {
-    private EntityQuery _projectilesQuerry;
+    private EntityQuery _rigidObjectsQuery;
     private float3 _newPosition;
     private float _deltaTime;
+    private float3 _targetRotation;
+    private Quaternion _rotation;
 
     protected override void OnCreate()
     {
-        _projectilesQuerry = GetEntityQuery(
+        _rigidObjectsQuery = GetEntityQuery(
             ComponentType.ReadOnly<Projectile>(),
             ComponentType.ReadOnly<Transform>(),
-            ComponentType.ReadOnly<ProjectileData>());
+            ComponentType.ReadOnly<ProjectileObjectData>());
     }
 
     protected override void OnUpdate()
     {
         _deltaTime = Time.DeltaTime;
-        Entities.With(_projectilesQuerry).ForEach
+        Entities.With(_rigidObjectsQuery).ForEach
             (
-                (ref ProjectileData projectileData, Transform transform, Projectile projectile) =>
+                (ref ProjectileObjectData rigidObjectData, Transform transform, Projectile projectile) =>
                 {
-                    ManageProjectileTravel(transform, projectile, ref projectileData, _deltaTime);
+                    ManageProjectileTravel(transform, projectile, ref rigidObjectData, _deltaTime);
                 }
             );
     }
 
-    private void ManageProjectileTravel(Transform transform, Projectile projectile, ref ProjectileData projectileData, float deltaTime)
+    private void ManageProjectileTravel(Transform transform, Projectile projectile, ref ProjectileObjectData rigidObjectData, float deltaTime)
     {
-        if (projectile.Active)
+        if (projectile.ActiveProjectile)
         {
-            _newPosition = transform.forward * projectileData.Speed * deltaTime;
-            transform.position += new Vector3(_newPosition.x, _newPosition.y, _newPosition.z);
+            rigidObjectData.Velocity = transform.TransformVector(rigidObjectData.ForwardDirectionSelf).normalized;
+            _newPosition = (float3)projectile.transform.position + rigidObjectData.Velocity * projectile.InitialSpeed * deltaTime;
+            transform.position = _newPosition;
+            transform.rotation = Quaternion.LookRotation(rigidObjectData.Velocity);
+            if (math.length(rigidObjectData.ForwardDirectionSelf - rigidObjectData.ForwardInitialDirectionSelf) > 0.0001f)
+            {
+                rigidObjectData.ForwardDirectionSelf = rigidObjectData.ForwardInitialDirectionSelf;
+            }
         }
     }
 }

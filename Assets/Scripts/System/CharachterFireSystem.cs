@@ -3,13 +3,13 @@ using Unity.Entities;
 
 public class CharacterFireSystem : ComponentSystem
 {
-    private EntityQuery _fireQuerry;
+    private EntityQuery _fireQuery;
     private float _deltaTime;
     private FireAbility _fireAbility;
 
     protected override void OnCreate()
     {
-        _fireQuerry = GetEntityQuery(
+        _fireQuery = GetEntityQuery(
             ComponentType.ReadOnly<InputData>(),
             ComponentType.ReadOnly<FireData>(),
             ComponentType.ReadOnly<UserInputData>());
@@ -18,7 +18,7 @@ public class CharacterFireSystem : ComponentSystem
     protected override void OnUpdate()
     {
         _deltaTime = Time.DeltaTime;
-        Entities.With(_fireQuerry).ForEach
+        Entities.With(_fireQuery).ForEach
             (
                 (UserInputData userInputData, ref FireData fireData, ref InputData inputData) =>
                 {

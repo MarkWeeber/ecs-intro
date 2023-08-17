@@ -3,16 +3,16 @@ using Unity.Mathematics;
 
 public class AnimatorParametersSetSystem : ComponentSystem
 {
-    private EntityQuery _animatorQuerry;
+    private EntityQuery _animatorQuery;
 
     protected override void OnCreate()
     {
-        _animatorQuerry = GetEntityQuery(ComponentType.ReadOnly<UserInputData>(), ComponentType.ReadOnly<InputData>());
+        _animatorQuery = GetEntityQuery(ComponentType.ReadOnly<UserInputData>(), ComponentType.ReadOnly<InputData>());
     }
 
     protected override void OnUpdate()
     {
-        Entities.With(_animatorQuerry).ForEach
+        Entities.With(_animatorQuery).ForEach
             (
                 (UserInputData userInputData, ref InputData inputData) =>
                 {
