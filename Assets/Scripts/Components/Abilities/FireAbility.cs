@@ -38,8 +38,12 @@ public class FireAbility : MonoBehaviour, IAbility
 
     private void SendProjectie()
     {
-        _sampleProjectile = GameObject.Instantiate(projectilePrefab, firePort.position, Quaternion.identity).GetComponent<Projectile>();
-        _sampleProjectile.Enable(firePort);
+        var _go = GameObject.Instantiate(projectilePrefab, firePort.position, firePort.rotation);
+        _sampleProjectile = _go.GetComponent<Projectile>();
+        if (_sampleProjectile != null)
+        {
+            _sampleProjectile.Enable(firePort);
+        }
         animator.SetTrigger(name: "Fire");
         _sampleProjectile = null;
     }
