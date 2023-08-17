@@ -14,7 +14,6 @@ public class Projectile : MonoBehaviour, IConvertGameObjectToEntity
     {
         meshRenderer = GetComponent<MeshRenderer>();
         _collider = GetComponent<Collider>();
-        Disable();
     }
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)

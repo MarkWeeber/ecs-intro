@@ -14,6 +14,8 @@ public abstract class CollisionAbility : MonoBehaviour, IConvertGameObjectToEnti
     public string[] TargetTags { get { return targetTags; } set { targetTags = value; } }
     public List<Collider> Collisions { get; set; }
     public Collider Collider { get; set; }
+    public AbilityType abilityType = AbilityType.ConstantEffector;
+    public AbilityType AbilityType { get { return abilityType; } set { abilityType = value; } }
     public bool Active { get { return _active; } set { _active = value; } }
     private bool _active = true;
 
@@ -69,7 +71,7 @@ public abstract class CollisionAbility : MonoBehaviour, IConvertGameObjectToEnti
 
     public void Execute()
     {
-        Debug.Log(gameObject.name + ": HIT");
+        Debug.Log(gameObject.name + ": hit by abstract collision ability");
     }
 }
 

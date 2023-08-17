@@ -7,7 +7,8 @@ public class DashAbility : MonoBehaviour, IAbility
     private float dashSpeed = 3f;
     [SerializeField]
     private float dashCoolDown = 1f;
-
+    private AbilityType abilityType = AbilityType.OneTimeTrigger;
+    public AbilityType AbilityType { get { return abilityType; } set { abilityType = value; } }
     public float Duration { get { return dashCoolDown; } set { dashCoolDown = value; } }
 
     private float dashCoolDownTimer = 0;

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7009383776329016038}
   - component: {fileID: 7009383776329016039}
   - component: {fileID: 9134172207760654608}
-  - component: {fileID: 1725996107122744691}
+  - component: {fileID: 5738398657956956781}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -494,7 +494,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 5175
+  m_VersionIndex: 5178
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -605,9 +605,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f74f39b7e09ab4096bd99957605a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 2
-  Active: 0
---- !u!114 &1725996107122744691
+  InitialSpeed: 10
+  ActiveProjectile: 0
+--- !u!114 &5738398657956956781
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

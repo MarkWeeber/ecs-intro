@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 5495113866579226849}
   - component: {fileID: 4339803636302873051}
   - component: {fileID: 7979874135091372267}
-  - component: {fileID: 6642148380252578758}
+  - component: {fileID: 6430495341134208738}
   m_Layer: 0
-  m_Name: RocketProjectile
+  m_Name: RocketProjectileBouncy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1657,9 +1657,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f74f39b7e09ab4096bd99957605a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialSpeed: 4
+  InitialSpeed: 2
   ActiveProjectile: 0
---- !u!114 &6642148380252578758
+--- !u!114 &6430495341134208738
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1671,20 +1671,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e823672ada7bad44380d13b460591fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTags: []
+  targetTags:
+  - Wall
+  abilityType: 2
   TargetMask:
     serializedVersion: 2
     m_Bits: 64
-  ContactNormal:
-    x: 0
-    y: 0
-    z: 0
-  Contacted: 0
-  info1:
-    x: 0
-    y: 0
-    z: 0
-  info2:
-    x: 0
-    y: 0
-    z: 0
