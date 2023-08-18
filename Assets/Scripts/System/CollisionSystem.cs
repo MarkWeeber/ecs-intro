@@ -99,6 +99,11 @@ public class CollisionSystem : ComponentSystem
         {
             return;
         }
+        CollisionAbility __collisionAbility = transform.gameObject.GetComponent<CollisionAbility>();
+        if(__collisionAbility != null)
+        {
+            __collisionAbility._ActorColliderData = colliderData;
+        }
         _position = transform.position;
         _rotation = transform.rotation;
         _collisionAbility.Collisions?.Clear();
@@ -131,6 +136,12 @@ public class CollisionSystem : ComponentSystem
 
     private void ManageProjectileBounce(Transform transform, ref ProjectileObjectData projectileData, ref ActorColliderData colliderData)
     {
+        SelfDestructAbility sda = transform.GetComponent<SelfDestructAbility>();
+        if (sda != null)
+        {
+            sda.ActorColliderData = colliderData;
+            sda.projectileData = projectileData;
+        }
         _bounceAbility = transform.gameObject.GetComponent<BounceAbility>();
         if (_bounceAbility == null)
         {
@@ -160,11 +171,11 @@ public class CollisionSystem : ComponentSystem
                 _castBackupOffset = math.normalize(projectileData.Velocity) * colliderData.SphereRadius;
                 _castDistance = math.length(_castBackupOffset);
                 hit = Physics.SphereCast(
-                    (float3)transform.position - _castBackupOffset,
+                    (float3)transform.position,
                     colliderData.SphereRadius,
                     projectileData.Velocity,
                     out _raycastHit,
-                    _castDistance,
+                    _castDistance * 0.5f,
                     _bounceAbility.TargetMask);
                 break;
             case ColliderType.Capsule:
@@ -176,24 +187,24 @@ public class CollisionSystem : ComponentSystem
                 _castBackupOffset = math.normalize(projectileData.Velocity) * math.length(_capsulePoint1 - _capsulePoint2);
                 _castDistance = math.length(_castBackupOffset);
                 hit = Physics.CapsuleCast(
-                    _capsulePoint1 - _castBackupOffset,
-                    _capsulePoint1 - _castBackupOffset,
+                    _capsulePoint1,
+                    _capsulePoint2,
                     colliderData.CapsuleRadius,
                     projectileData.Velocity,
                     out _raycastHit,
-                    _castDistance,
+                    _castDistance * 0.5f,
                     _bounceAbility.TargetMask);
                 break;
             case ColliderType.Box:
                 _castBackupOffset = math.normalize(projectileData.Velocity) * colliderData.BoxHalfExtents * 2f;
                 _castDistance = math.length(_castBackupOffset);
                 hit = Physics.BoxCast(
-                    (float3)transform.position + colliderData.BoxCenter - _castBackupOffset,
-                    colliderData.BoxHalfExtents * 2f,
+                    (float3)transform.position + colliderData.BoxCenter,
+                    colliderData.BoxHalfExtents,
                     projectileData.Velocity,
                     out _raycastHit,
-                    colliderData.BoxOrientation,
-                    _castDistance,
+                    colliderData.BoxOrientation * transform.rotation,
+                    _castDistance * 0.5f,
                     _bounceAbility.TargetMask);
                 break;
             default:
@@ -201,6 +212,10 @@ public class CollisionSystem : ComponentSystem
         }
         if (hit)
         {
+            //if(_raycastHit.collider.transform.gameObject.Equals(transform.gameObject))
+            //{
+            //    return;
+            //}
             _reflectionDirection = Vector3.Reflect(projectileData.Velocity, _raycastHit.normal);
             projectileData.ForwardDirectionSelf = transform.InverseTransformVector(math.normalize(_reflectionDirection));
         }
