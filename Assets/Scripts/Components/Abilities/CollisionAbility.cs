@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using TagsUtility;
 
 [RequireComponent(typeof(Collider))]
-public abstract class CollisionAbility : MonoBehaviour, IConvertGameObjectToEntity, ICollisionAbility, IDestructible
+public class CollisionAbility : MonoBehaviour, IConvertGameObjectToEntity, ICollisionAbility, IDestructible
 {
     [TagSelector]
     public string[] targetTags = new string[] { };

@@ -23,15 +23,15 @@ public class HealAbility : CollisionAbility, ICollisionAbility
         foreach (Collider target in Collisions)
         {
             _targetTag = target?.gameObject?.tag;
-            if (!TagSelectorPropertyDrawer.TagSelectorContainsTag(TargetTags, _targetTag))
+            if (TagSelectorPropertyDrawer.TagSelectorContainsTag(TargetTags, _targetTag))
             {
-                continue;
-            }
-            _targetHealth = target?.gameObject?.GetComponent<IHealth>();
-            if (_targetHealth != null)
-            {
-                _targetHealth.HealUp(healAmount);
-                DestoySelf();
+                _targetHealth = target?.gameObject?.GetComponent<IHealth>();
+                if (_targetHealth != null)
+                {
+                    _targetHealth.HealUp(healAmount);
+                    DestoySelf();
+                }
+                break;
             }
         }
     }

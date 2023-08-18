@@ -1044,7 +1044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 0}
-  movementSpeed: 1
+  movementSpeed: 0.75
   deadZoneMagnitude: 0.1
 --- !u!114 &786044634
 MonoBehaviour:
@@ -1087,7 +1087,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireCoolDown: 0.52
   projectilePrefab: {fileID: 5495113866579226862, guid: 83351a87d42c6d440bb00f3294c67424, type: 3}
-  maxProjectileAmount: 20
+  maxProjectileAmount: 2
+  firePort: {fileID: 8366011583339755491}
+  fireInstatiate: 1
 --- !u!1 &8268358952469748214
 GameObject:
   m_ObjectHideFlags: 0

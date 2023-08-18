@@ -19,12 +19,16 @@ public class SelfDestructAbility : CollisionAbility, ICollisionAbility
     {
         foreach (Collider target in Collisions)
         {
-            _targetTag = target?.gameObject?.tag;
-            if (!TagSelectorPropertyDrawer.TagSelectorContainsTag(TargetTags, _targetTag))
+            if(target == null)
             {
                 continue;
             }
-            DestoySelf();
+            _targetTag = target?.gameObject?.tag;
+            if (TagSelectorPropertyDrawer.TagSelectorContainsTag(TargetTags, _targetTag))
+            {
+                DestoySelf();
+                break;
+            }
         }
     }
 
