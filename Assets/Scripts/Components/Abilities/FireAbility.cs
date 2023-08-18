@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Unity.Entities;
 using UnityEngine;
+using Unity.Transforms;
 
 public class FireAbility : MonoBehaviour, IAbility
 {
@@ -23,6 +25,7 @@ public class FireAbility : MonoBehaviour, IAbility
     private UserInputData userInputData;
     private Projectile _sampleProjectile;
     private IEnumerator<Projectile> _em;
+    private GameObject _sampleGameObject;
 
     private void Awake()
     {
@@ -53,6 +56,7 @@ public class FireAbility : MonoBehaviour, IAbility
     {
         for (int i = 0; i < maxProjectileAmount; i++)
         {
+            Debug.Log("STASH");
             _sampleProjectile = GameObject.Instantiate(projectilePrefab, firePort.position, firePort.rotation).GetComponent<Projectile>();
             projectiles.Add(_sampleProjectile);
         }
@@ -76,13 +80,24 @@ public class FireAbility : MonoBehaviour, IAbility
 
     private void SendProjectie()
     {
-        var _go = GameObject.Instantiate(projectilePrefab, firePort.position, firePort.rotation);
-        _sampleProjectile = _go.GetComponent<Projectile>();
+        Debug.Log("SEND");
+        _sampleGameObject = GameObject.Instantiate(projectilePrefab, firePort.position, firePort.rotation);
+        Debug.Log("SEND END");
+        _sampleProjectile = _sampleGameObject.GetComponent<Projectile>();
         if (_sampleProjectile != null)
         {
             _sampleProjectile.Enable(firePort);
         }
         animator.SetTrigger(name: "Fire");
         _sampleProjectile = null;
+    }
+
+    private void _ConvertToEntity()
+    {
+        //ConvertToEntity x = _sampleGameObject.AddComponent<ConvertToEntity>();
+        //x.ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;
+        Entity prefabEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(projectilePrefab, GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, new BlobAssetStore()));
+        Entity newEntity = World.DefaultGameObjectInjectionWorld.EntityManager.Instantiate(prefabEntity);
+        World.DefaultGameObjectInjectionWorld.EntityManager.SetComponentData(newEntity, new Translation{Value = firePort.position});
     }
 }
