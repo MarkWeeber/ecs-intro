@@ -1496,6 +1496,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3298033548530432490, guid: 4bba5b148d96ddb4fb8d1263c207081c, type: 3}
+      propertyPath: collisionLayerMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 3298033548530432499, guid: 4bba5b148d96ddb4fb8d1263c207081c, type: 3}
       propertyPath: m_Name
       value: HazardArea
@@ -2492,10 +2496,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AbilityPickup
       objectReference: {fileID: 0}
-    - target: {fileID: 4787166797630377289, guid: 6657a0cf4f95fd744b22c5ebdec7a743, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 669744d230613e74e9f3594ef06e4016, type: 2}
     - target: {fileID: 8700992942246790829, guid: 6657a0cf4f95fd744b22c5ebdec7a743, type: 3}
       propertyPath: m_RootOrder
       value: 19
@@ -2544,10 +2544,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1386604785}
-    - target: {fileID: 8733837580145265200, guid: 6657a0cf4f95fd744b22c5ebdec7a743, type: 3}
-      propertyPath: m_VersionIndex
-      value: 2708
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6657a0cf4f95fd744b22c5ebdec7a743, type: 3}
 --- !u!1001 &8266900552796476916
@@ -2557,30 +2553,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6960393498434265457, guid: 36fed7277f205184592bf7fc74daa85f, type: 3}
-      propertyPath: SpecialFire
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6960393498434265457, guid: 36fed7277f205184592bf7fc74daa85f, type: 3}
-      propertyPath: fireInstatiate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6960393498434265457, guid: 36fed7277f205184592bf7fc74daa85f, type: 3}
-      propertyPath: projectilePrefab
-      value: 
-      objectReference: {fileID: 5495113866579226848, guid: 83351a87d42c6d440bb00f3294c67424, type: 3}
-    - target: {fileID: 6960393498434265457, guid: 36fed7277f205184592bf7fc74daa85f, type: 3}
-      propertyPath: maxProjectileAmount
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 6960393498434265457, guid: 36fed7277f205184592bf7fc74daa85f, type: 3}
-      propertyPath: simpleProjectilePrefab
-      value: 
-      objectReference: {fileID: 5495113866579226848, guid: 83351a87d42c6d440bb00f3294c67424, type: 3}
-    - target: {fileID: 6960393498434265457, guid: 36fed7277f205184592bf7fc74daa85f, type: 3}
-      propertyPath: specialprojectilePrefab
-      value: 
-      objectReference: {fileID: 5495113866579226848, guid: 4ee91730f6571f045bf2321eeb5cc7f3, type: 3}
     - target: {fileID: 8262048244073762194, guid: 36fed7277f205184592bf7fc74daa85f, type: 3}
       propertyPath: m_RootOrder
       value: 5

@@ -60,7 +60,14 @@ public class FireAbility : MonoBehaviour, IAbility
         }
         else
         {
-            CirculateProjectilesSend();
+            if (SpecialFire)
+            {
+                CirculateProjectilesSend1(_specialEm);
+            }
+            else
+            {
+                CirculateProjectilesSend1(_simpleEm);
+            }
         }
     }
 
@@ -75,23 +82,17 @@ public class FireAbility : MonoBehaviour, IAbility
         }
     }
 
-    private void CirculateProjectilesSend1(List<Projectile> projectiles, ref IEnumerator<Projectile> em)
+    private void CirculateProjectilesSend1(IEnumerator<Projectile> em)
     {
-        if (!projectiles.Any())
-        {
-            return;
-        }
         if (em.MoveNext())
         {
             _sampleProjectile = em.Current;
         }
         else
         {
-            projectiles.RemoveAll(item => item == null);
-            em = projectiles.GetEnumerator();
             em.Reset();
             em.MoveNext();
-            _sampleProjectile = _simpleEm.Current;
+            _sampleProjectile = em.Current;
         }
         if (_sampleProjectile != null)
         {

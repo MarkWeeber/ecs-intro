@@ -18,6 +18,9 @@ public class CollisionAbility : MonoBehaviour, IConvertGameObjectToEntity, IColl
     public AbilityType AbilityType { get { return abilityType; } set { abilityType = value; } }
     public bool Active { get { return _active; } set { _active = value; } }
     private bool _active = true;
+    public LayerMask CollisionLayermask { get { return collisionLayerMask; } set { collisionLayerMask = value; } }
+    public LayerMask collisionLayerMask;
+
     public ActorColliderData _ActorColliderData;
     public ProjectileObjectData _projectileData;
 

@@ -29,7 +29,7 @@ public class SelfDestructAbility : CollisionAbility, ICollisionAbility
                 continue;
             }
             _targetTag = target?.gameObject?.tag;
-            if (TagSelectorPropertyDrawer.TagSelectorContainsTag(TargetTags, _targetTag))
+            if (TagSelectorPropertyDrawer.TagSelectorContainsTag(TargetTags, _targetTag) && projectile.ActiveProjectile && target != Collider)
             {
                 projectile.Disable();
                 break;

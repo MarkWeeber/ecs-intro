@@ -111,7 +111,7 @@ public class CollisionSystem : ComponentSystem
         switch (colliderData.ColliderType)
         {
             case ColliderType.Sphere:
-                _collidersCount = Physics.OverlapSphereNonAlloc(colliderData.SphereCenter + _position, colliderData.SphereRadius, _results);
+                _collidersCount = Physics.OverlapSphereNonAlloc(colliderData.SphereCenter + _position, colliderData.SphereRadius, _results, _collisionAbility.CollisionLayermask);
                 break;
             case ColliderType.Capsule:
                 _capsulePoint1 = colliderData.CapsuleStart + _position;
@@ -119,10 +119,10 @@ public class CollisionSystem : ComponentSystem
                 _capsuleCenter = (_capsulePoint1 + _capsulePoint2) / 2f;
                 _capsulePoint1 = (float3)(_rotation * (_capsulePoint1 - _capsuleCenter)) + _capsuleCenter;
                 _capsulePoint2 = (float3)(_rotation * (_capsulePoint2 - _capsuleCenter)) + _capsuleCenter;
-                _collidersCount = Physics.OverlapCapsuleNonAlloc(_capsulePoint1, _capsulePoint2, colliderData.CapsuleRadius, _results);
+                _collidersCount = Physics.OverlapCapsuleNonAlloc(_capsulePoint1, _capsulePoint2, colliderData.CapsuleRadius, _results, _collisionAbility.CollisionLayermask);
                 break;
             case ColliderType.Box:
-                _collidersCount = Physics.OverlapBoxNonAlloc(colliderData.BoxCenter + _position, colliderData.BoxHalfExtents, _results, colliderData.BoxOrientation * _rotation);
+                _collidersCount = Physics.OverlapBoxNonAlloc(colliderData.BoxCenter + _position, colliderData.BoxHalfExtents, _results, colliderData.BoxOrientation * _rotation, _collisionAbility.CollisionLayermask);
                 break;
             default:
                 break;
@@ -212,10 +212,10 @@ public class CollisionSystem : ComponentSystem
         }
         if (hit)
         {
-            //if(_raycastHit.collider.transform.gameObject.Equals(transform.gameObject))
-            //{
-            //    return;
-            //}
+            if (_raycastHit.collider.transform.gameObject.Equals(transform.gameObject))
+            {
+                return;
+            }
             _reflectionDirection = Vector3.Reflect(projectileData.Velocity, _raycastHit.normal);
             projectileData.ForwardDirectionSelf = transform.InverseTransformVector(math.normalize(_reflectionDirection));
         }

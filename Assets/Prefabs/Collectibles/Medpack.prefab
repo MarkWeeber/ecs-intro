@@ -115,6 +115,9 @@ MonoBehaviour:
   targetTags:
   - Player
   abilityType: 2
+  collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
   healAmount: 20
 --- !u!114 &8540260737225208586
 MonoBehaviour:
