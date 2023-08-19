@@ -31,10 +31,10 @@ public class UserInputData : MonoBehaviour, IConvertGameObjectToEntity
                     switch (item)
                     {
                         case FireAbility fireAbility:
-                            dstManager.AddComponentData<FireData>(entity, new FireData());;
+                            dstManager.AddComponentData<FireData>(entity, new FireData{ProjectileSpeed = 0,Engaged = false});;
                             break;
                         case DashAbility dashAbility:
-                            dstManager.AddComponentData<DashData>(entity, new DashData());
+                            dstManager.AddComponentData<DashData>(entity, new DashData{DashDuration = 0, Engaged = false});
                             break;
                         default:
                         break;

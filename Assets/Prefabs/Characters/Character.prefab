@@ -957,8 +957,8 @@ GameObject:
   - component: {fileID: 786044633}
   - component: {fileID: 786044634}
   - component: {fileID: 1126977914}
-  - component: {fileID: 1891504777}
-  m_Layer: 0
+  - component: {fileID: 6960393498434265457}
+  m_Layer: 8
   m_Name: Character
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1044,7 +1044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 0}
-  movementSpeed: 1
+  movementSpeed: 0.75
   deadZoneMagnitude: 0.1
 --- !u!114 &786044634
 MonoBehaviour:
@@ -1073,7 +1073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
---- !u!114 &1891504777
+--- !u!114 &6960393498434265457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1082,13 +1082,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8268345107810667752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f53e2f42531765b46bdb2bbd15c9a264, type: 3}
+  m_Script: {fileID: 11500000, guid: e085d0f161aa7ab408a533112cc95131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fireCoolDown: 0.52
-  projectilePrefab: {fileID: 5495113866579226862, guid: 83351a87d42c6d440bb00f3294c67424, type: 3}
-  maxProjectileAmount: 20
+  simpleProjectilePrefab: {fileID: 5495113866579226848, guid: 83351a87d42c6d440bb00f3294c67424, type: 3}
+  specialprojectilePrefab: {fileID: 5495113866579226848, guid: 4ee91730f6571f045bf2321eeb5cc7f3, type: 3}
+  maxProjectileAmount: 50
   firePort: {fileID: 8366011583339755491}
+  SpecialFire: 0
 --- !u!1 &8268358952469748214
 GameObject:
   m_ObjectHideFlags: 0

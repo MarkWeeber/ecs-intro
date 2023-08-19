@@ -81,10 +81,5 @@ namespace EcsCollisionUtility
         {
             return Mathf.Max(v.x, Mathf.Max(v.y, v.z));
         }
-
-        public static float Magnitude(this float3 f)
-        {
-            return math.length(f);
-        }
     }
 }

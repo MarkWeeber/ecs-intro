@@ -1,11 +1,9 @@
-using TagsUtility;
+﻿using TagsUtility;
 using UnityEngine;
 
-public class HealAbility : CollisionAbility, ICollisionAbility
+public class BounceAbilityPickup : CollisionAbility, ICollisionAbility
 {
-    [SerializeField]
-    private float healAmount = 20f;
-    private IHealth _targetHealth;
+    private FireAbility _targetFireAbility;
     private string _targetTag;
 
     private void Awake()
@@ -22,17 +20,13 @@ public class HealAbility : CollisionAbility, ICollisionAbility
     {
         foreach (Collider target in Collisions)
         {
-            if (target == null)
-            {
-                continue;
-            }
             _targetTag = target?.gameObject?.tag;
             if (TagSelectorPropertyDrawer.TagSelectorContainsTag(TargetTags, _targetTag))
             {
-                _targetHealth = target?.gameObject?.GetComponent<IHealth>();
-                if (_targetHealth != null)
+                _targetFireAbility = target?.gameObject?.GetComponent<FireAbility>();
+                if (_targetFireAbility != null)
                 {
-                    _targetHealth.HealUp(healAmount);
+                    _targetFireAbility.SpecialFire = true;
                     DestoySelf();
                 }
                 break;

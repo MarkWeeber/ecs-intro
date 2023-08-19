@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using TagsUtility;
 
 [RequireComponent(typeof(Collider))]
-public abstract class CollisionAbility : MonoBehaviour, IConvertGameObjectToEntity, ICollisionAbility, IDestructible
+public class CollisionAbility : MonoBehaviour, IConvertGameObjectToEntity, ICollisionAbility, IDestructible
 {
     [TagSelector]
     public string[] targetTags = new string[] { };
@@ -18,6 +18,11 @@ public abstract class CollisionAbility : MonoBehaviour, IConvertGameObjectToEnti
     public AbilityType AbilityType { get { return abilityType; } set { abilityType = value; } }
     public bool Active { get { return _active; } set { _active = value; } }
     private bool _active = true;
+    public LayerMask CollisionLayermask { get { return collisionLayerMask; } set { collisionLayerMask = value; } }
+    public LayerMask collisionLayerMask;
+
+    public ActorColliderData _ActorColliderData;
+    public ProjectileObjectData _projectileData;
 
     private void Awake()
     {
@@ -73,6 +78,35 @@ public abstract class CollisionAbility : MonoBehaviour, IConvertGameObjectToEnti
     {
         Debug.Log(gameObject.name + ": hit by abstract collision ability");
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = new Color(0f, 1f, 0f, 0.5f);
+    //    switch (_ActorColliderData.ColliderType)
+    //    {
+    //        case ColliderType.Sphere:
+    //            Gizmos.DrawSphere(
+    //                ((float3)transform.position + _ActorColliderData.SphereCenter) ,
+    //                _ActorColliderData.SphereRadius);
+    //            break;
+    //        case ColliderType.Capsule:
+    //            var _point1 = _ActorColliderData.CapsuleStart + (float3)transform.position;
+    //            var _point2 = _ActorColliderData.CapsuleEnd + (float3)transform.position;
+    //            var _center = (_point1 + _point2) / 2f;
+    //            _point1 = (float3)(transform.rotation * (_point1 - _center)) + _center;
+    //            _point2 = (float3)(transform.rotation * (_point2 - _center)) + _center;
+    //            Gizmos.DrawSphere(_point1, _ActorColliderData.CapsuleRadius);
+    //            Gizmos.DrawSphere(_point2, _ActorColliderData.CapsuleRadius);
+    //            break;
+    //        case ColliderType.Box:
+    //            Gizmos.DrawCube(
+    //                ((float3)transform.position),
+    //                _ActorColliderData.BoxHalfExtents * 2f);
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
 }
 
 public struct ActorColliderData : IComponentData

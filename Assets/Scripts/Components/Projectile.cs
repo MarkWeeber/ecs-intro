@@ -25,18 +25,18 @@ public class Projectile : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Enable(Transform pos)
     {
+        transform.SetPositionAndRotation(pos.position, Quaternion.LookRotation(pos.forward));
+        _collider.enabled = true;
         ActiveProjectile = true;
         meshRenderer.enabled = true;
-        _collider.enabled = true;
         transform.parent = null;
-        //transform.SetPositionAndRotation(pos.position, Quaternion.LookRotation(pos.forward));
     }
 
     public void Disable()
     {
+        _collider.enabled = false;
         ActiveProjectile = false;
         meshRenderer.enabled = false;
-        _collider.enabled = false;
     }
 }
 
