@@ -11,7 +11,7 @@ public class BounceAbilityPickup : CollisionAbility, ICollisionAbility
         Collider = GetComponent<Collider>();
     }
 
-    public void Execute()
+    public new void Execute()
     {
         TryHeal();
     }

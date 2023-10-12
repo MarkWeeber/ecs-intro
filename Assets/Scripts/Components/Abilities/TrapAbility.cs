@@ -18,7 +18,7 @@ public class TrapAbility : CollisionAbility, ICollisionAbility
         _timeCurrent = Time.time;
     }
 
-    public void Execute()
+    public new void Execute()
     {
         _timeCurrent = Time.time;
         if ((_timeCurrent - _damageTimer) > damageDuration)

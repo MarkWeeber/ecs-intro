@@ -15,7 +15,7 @@ public class SelfDestructAbility : CollisionAbility, ICollisionAbility
         projectile = GetComponent<Projectile>();
     }
 
-    public void Execute()
+    public new void Execute()
     {
         TrySelfDestruct();
     }

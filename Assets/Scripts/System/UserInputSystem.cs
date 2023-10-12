@@ -1,7 +1,9 @@
+using System;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static CharacterControlsScheme;
 
 public class UserInputSystem : ComponentSystem
 {
@@ -19,31 +21,26 @@ public class UserInputSystem : ComponentSystem
 
     protected override void OnStartRunning()
     {
-        charControlScheme.Character.Move.performed += MoveActionPerformed;
-        charControlScheme.Character.Move.started += MoveActionPerformed;
-        charControlScheme.Character.Move.canceled += MoveActionPerformed;
-        charControlScheme.Character.Move.Enable();
-
-        charControlScheme.Character.Dash.performed += context => { _dashInput = context.ReadValue<float>(); };;
-        charControlScheme.Character.Dash.canceled += context => { _dashInput = context.ReadValue<float>(); };;
-        charControlScheme.Character.Dash.Enable();
-
-        charControlScheme.Character.Fire.performed += context => { _fireInput = context.ReadValue<float>(); };;
-        charControlScheme.Character.Fire.canceled += context => { _fireInput = context.ReadValue<float>(); };;
-        charControlScheme.Character.Fire.Enable();
+        charControlScheme.Character.Move.performed += HandleMove;
+        charControlScheme.Character.Move.performed += context => {_moveInput = context.ReadValue<Vector2>(); };
+        charControlScheme.Character.Move.started += context => { _moveInput = context.ReadValue<Vector2>(); };
+        charControlScheme.Character.Move.canceled += context => { _moveInput = context.ReadValue<Vector2>(); };
+        charControlScheme.Character.Dash.performed += context => { _dashInput = context.ReadValue<float>(); };
+        charControlScheme.Character.Dash.canceled += context => { _dashInput = context.ReadValue<float>(); };
+        charControlScheme.Character.Fire.performed += context => { _fireInput = context.ReadValue<float>(); };
+        charControlScheme.Character.Fire.canceled += context => { _fireInput = context.ReadValue<float>(); };
+        charControlScheme.Character.Enable();
 
     }
 
-    private void MoveActionPerformed(InputAction.CallbackContext obj)
+    private void HandleMove(InputAction.CallbackContext context)
     {
-        _moveInput = obj.ReadValue<Vector2>();
+        throw new NotImplementedException();
     }
 
     protected override void OnStopRunning()
     {
-        charControlScheme.Character.Move.Enable();
-        charControlScheme.Character.Dash.Enable();
-        charControlScheme.Character.Fire.Enable();
+        charControlScheme.Character.Disable();
     }
 
     protected override void OnUpdate()
@@ -61,5 +58,10 @@ public class UserInputSystem : ComponentSystem
         inputData.Move = _moveInput;
         inputData.Dash = _dashInput;
         inputData.Fire = _fireInput;
+    }
+
+    private void MoveActionPerformed(InputAction.CallbackContext obj)
+    {
+        _moveInput = obj.ReadValue<Vector2>();
     }
 }
