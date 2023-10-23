@@ -35,7 +35,7 @@ public class UserInputSystem : ComponentSystem
 
     private void HandleMove(InputAction.CallbackContext context)
     {
-        throw new NotImplementedException();
+        
     }
 
     protected override void OnStopRunning()
